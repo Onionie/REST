@@ -23,10 +23,31 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
+app.get("/", function(req,res){
+  res.send("Try 'localhost:3000/articles'");
+});
+
 app.get("/articles", function(req,res){
   Article.find(function(err, foundArticles){
     res.send(foundArticles);
   });
+});
+
+app.post("/articles", function(req, res){
+  const newArticle =  new Article({
+    title: req.body.title,
+    content: req.body.content
+  })
+
+  newArticle.save(function(err){
+    if(!error){
+      res.send("Successfully Added new article");
+    }
+    else{
+      res.send(err);
+    }
+  });
+
 });
 
 
