@@ -49,7 +49,18 @@ app.post("/articles", function(req, res){
       res.send(err);
     }
   });
+});
 
+//delete method
+app.delete("/articles", function(req, res){
+  Article.deleteMany(function(err){
+    if(!err){
+      res.send("Successfully deleted ALL articles");
+    }
+    else{
+      res.send(err);
+    }
+  });
 });
 
 
