@@ -23,19 +23,23 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
-app.get("/", function(req,res){
-  res.send("Try 'localhost:3000/articles'");
+app.get("/", function(req, res){
+  res.send("Try 'localhost:3000/articles'")
 });
 
+
+//Chained Route
+app.route("/articles")
+
 //get method to fetch our data
-app.get("/articles", function(req,res){
+.get(function(req,res){
   Article.find(function(err, foundArticles){
     res.send(foundArticles);
   });
-});
+})
 
 //post method to add data
-app.post("/articles", function(req, res){
+.post(function(req, res){
   const newArticle =  new Article({
     title: req.body.title,
     content: req.body.content
@@ -49,10 +53,10 @@ app.post("/articles", function(req, res){
       res.send(err);
     }
   });
-});
+})
 
 //delete method
-app.delete("/articles", function(req, res){
+.delete(function(req, res){
   Article.deleteMany(function(err){
     if(!err){
       res.send("Successfully deleted ALL articles");
@@ -62,6 +66,7 @@ app.delete("/articles", function(req, res){
     }
   });
 });
+
 
 
 
