@@ -27,12 +27,14 @@ app.get("/", function(req,res){
   res.send("Try 'localhost:3000/articles'");
 });
 
+//get method to fetch our data
 app.get("/articles", function(req,res){
   Article.find(function(err, foundArticles){
     res.send(foundArticles);
   });
 });
 
+//post method to add data
 app.post("/articles", function(req, res){
   const newArticle =  new Article({
     title: req.body.title,
