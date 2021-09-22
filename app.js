@@ -82,7 +82,8 @@ app.route("/articles/:articleTitle")
   });
 })
 
-//put method allows us to update
+//put method allows us to update the whole data
+//if we miss one field, that fiel will be null, i.e. title is unchecked
 .put(function(req, res){
   Article.replaceOne(
     //condition looks for the route with that title
@@ -98,9 +99,25 @@ app.route("/articles/:articleTitle")
       }
     }
   );
+})
+
+.patch(function(req,res){
+  Article.updateOne(
+    //condition where title is = route parameter
+    {title: req.params.articleTitle},
+    //The $set operator replaces the value of a field with the specified value.
+    //$set: updates
+    {$set: req.body},
+    function(err){
+      if(!err){
+        res.send("Succesfully updated using patch method")
+      }
+      else{
+        res.send(err);
+      }
+    }
+  )
 });
-
-
 
 
 app.listen(3000, function(){
