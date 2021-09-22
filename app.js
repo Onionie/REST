@@ -117,6 +117,24 @@ app.route("/articles/:articleTitle")
       }
     }
   )
+})
+
+//delete method
+.delete(function(req, res){
+  const articleTitle = req.params.articleTitle;
+
+  //deletes the article with the title same as route params
+  Article.deleteOne(
+    {title: articleTitle},
+    function(err){
+      if(!err){
+        res.send("Succesfully deleted this article called: " + articleTitle);
+      }
+      else{
+        res.send(err);
+      }
+    }
+  )
 });
 
 
