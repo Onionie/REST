@@ -71,6 +71,7 @@ app.route("/articles")
 
 app.route("/articles/:articleTitle")
 .get(function(req, res){
+  // Look for an article that has this specific article title in articles document
   Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
     if(foundArticle){
       res.send(foundArticle);
@@ -79,6 +80,24 @@ app.route("/articles/:articleTitle")
       res.send("No articles matching that title was found.");
     }
   });
+})
+
+//put method allows us to update
+.put(function(req, res){
+  Article.replaceOne(
+    //condition looks for the route with that title
+    {title: req.params.articleTitle},
+    //update, then it will update the title and content
+    {title: req.body.title, content: req.body.content},
+    function(err){
+      if(!err){
+        res.send("Succesfully updated using put method")
+      }
+      else{
+        res.send(err)
+      }
+    }
+  );
 });
 
 
